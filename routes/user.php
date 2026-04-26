@@ -6,13 +6,13 @@ Route::namespace('User\Auth')->middleware('guest')->name('user.')->group(functio
 
     Route::controller('LoginController')->group(function () {
         Route::get('/login', 'showLoginForm')->name('login');
-        Route::post('/login', 'login');
+        Route::post('/login', 'login')->name('login.submit');
         Route::get('logout', 'logout')->middleware('auth')->withoutMiddleware('guest')->name('logout');
     });
 
     Route::controller('RegisterController')->middleware(['guest'])->group(function () {
         Route::get('register', 'showRegistrationForm')->name('register');
-        Route::post('register', 'register');
+        Route::post('register', 'register')->name('register.submit');
         Route::post('check-user', 'checkUser')->name('checkUser')->withoutMiddleware('guest');
     });
 
@@ -72,9 +72,9 @@ Route::middleware('auth')->name('user.')->group(function () {
             //Profile setting
             Route::controller('ProfileController')->group(function () {
                 Route::get('profile-setting', 'profile')->name('profile.setting');
-                Route::post('profile-setting', 'submitProfile');
+                Route::post('profile-setting', 'submitProfile')->name('profile.setting.update');
                 Route::get('change-password', 'changePassword')->name('change.password');
-                Route::post('change-password', 'submitPassword');
+                Route::post('change-password', 'submitPassword')->name('change.password.submit');
 
                 Route::get('shipping-address', 'shippingAddress')->name('shipping.address');
                 Route::post('shipping-address/store/{id?}', 'saveShippingAddress')->name('shipping.address.store');

@@ -44,7 +44,7 @@ Route::namespace('App\\Http\\Controllers\\Admin\\Auth')->group(function () {
     Route::middleware('admin.guest')->group(function () {
         Route::controller(LoginController::class)->group(function () {
             Route::get('/', 'showLoginForm')->name('login');
-            Route::post('/', 'login')->name('login');
+            Route::post('/', 'login')->name('login.submit');
             Route::get('logout', 'logout')->middleware('admin')->withoutMiddleware('admin.guest')->name('logout');
         });
 
@@ -139,7 +139,7 @@ Route::middleware('admin')->group(function () {
         Route::get('detail/{id}', 'detail')->name('detail');
         Route::post('update/{id}', 'update')->name('update');
         Route::get('send-notification/{id}', 'showNotificationSingleForm')->name('notification.single');
-        Route::post('send-notification/{id}', 'sendNotificationSingle')->name('notification.single');
+        Route::post('send-notification/{id}', 'sendNotificationSingle')->name('notification.single.send');
         Route::get('login/{id}', 'login')->name('login');
         Route::post('status/{id}', 'status')->name('status');
 
@@ -282,7 +282,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('send-email', 'sendEmailForm')->name('send.email');
         Route::post('remove/{id}', 'remove')->name('remove');
-        Route::post('send-email', 'sendEmail')->name('send.email');
+        Route::post('send-email', 'sendEmail')->name('send.email.submit');
     });
 
     //Shipping Methods
@@ -388,7 +388,7 @@ Route::middleware('admin')->group(function () {
 
         // General Setting
         Route::get('general-setting', 'general')->name('setting.general');
-        Route::post('general-setting', 'generalUpdate');
+        Route::post('general-setting', 'generalUpdate')->name('setting.general.update');
 
         Route::get('setting/social/credentials', 'socialiteCredentials')->name('setting.socialite.credentials');
         Route::post('setting/social/credentials/update/{key}', 'updateSocialiteCredential')->name('setting.socialite.credentials.update');
@@ -396,29 +396,29 @@ Route::middleware('admin')->group(function () {
 
         //configuration
         Route::get('setting/system-configuration', 'systemConfiguration')->name('setting.system.configuration');
-        Route::post('setting/system-configuration', 'systemConfigurationSubmit');
+        Route::post('setting/system-configuration', 'systemConfigurationSubmit')->name('setting.system.configuration.update');
 
         // Logo-Icon
         Route::get('setting/logo-icon', 'logoIcon')->name('setting.logo.icon');
-        Route::post('setting/logo-icon', 'logoIconUpdate')->name('setting.logo.icon');
+        Route::post('setting/logo-icon', 'logoIconUpdate')->name('setting.logo.icon.update');
 
         //Custom CSS
         Route::get('custom-css', 'customCss')->name('setting.custom.css');
-        Route::post('custom-css', 'customCssSubmit');
+        Route::post('custom-css', 'customCssSubmit')->name('setting.custom.css.update');
 
         Route::get('sitemap', 'sitemap')->name('setting.sitemap');
-        Route::post('sitemap', 'sitemapSubmit');
+        Route::post('sitemap', 'sitemapSubmit')->name('setting.sitemap.update');
 
         Route::get('robot', 'robot')->name('setting.robot');
-        Route::post('robot', 'robotSubmit');
+        Route::post('robot', 'robotSubmit')->name('setting.robot.update');
 
         //Cookie
         Route::get('cookie', 'cookie')->name('setting.cookie');
-        Route::post('cookie', 'cookieSubmit');
+        Route::post('cookie', 'cookieSubmit')->name('setting.cookie.update');
 
         //maintenance_mode
         Route::get('maintenance-mode', 'maintenanceMode')->name('maintenance.mode');
-        Route::post('maintenance-mode', 'maintenanceModeSubmit');
+        Route::post('maintenance-mode', 'maintenanceModeSubmit')->name('maintenance.mode.update');
 
         // layout selection
         Route::get('homepage-layouts', 'homepageLayouts')->name('setting.home.layouts');
@@ -443,16 +443,16 @@ Route::middleware('admin')->group(function () {
 
         //Email Setting
         Route::get('email/setting', 'emailSetting')->name('email');
-        Route::post('email/setting', 'emailSettingUpdate');
+        Route::post('email/setting', 'emailSettingUpdate')->name('email.update');
         Route::post('email/test', 'emailTest')->name('email.test');
 
         //SMS Setting
         Route::get('sms/setting', 'smsSetting')->name('sms');
-        Route::post('sms/setting', 'smsSettingUpdate');
+        Route::post('sms/setting', 'smsSettingUpdate')->name('sms.update');
         Route::post('sms/test', 'smsTest')->name('sms.test');
 
         Route::get('notification/push/setting', 'pushSetting')->name('push');
-        Route::post('notification/push/setting', 'pushSettingUpdate');
+        Route::post('notification/push/setting', 'pushSettingUpdate')->name('push.update');
         Route::post('notification/push/setting/upload', 'pushSettingUpload')->name('push.upload');
         Route::get('notification/push/setting/download', 'pushSettingDownload')->name('push.download');
     });
@@ -489,12 +489,11 @@ Route::middleware('admin')->group(function () {
             Route::get('templates', 'templates')->name('templates');
             Route::post('templates', 'templatesActive')->name('templates.active');
             Route::get('frontend-sections/{key?}', 'frontendSections')->name('sections');
-            Route::get('frontend-sections/{key?}', 'frontendSections')->name('sections');
             Route::post('frontend-content/{key}', 'frontendContent')->name('sections.content');
             Route::get('frontend-element/{key}/{id?}', 'frontendElement')->name('sections.element');
             Route::get('frontend-slug-check/{key}/{id?}', 'frontendElementSlugCheck')->name('sections.element.slug.check');
             Route::get('frontend-element-seo/{key}/{id}', 'frontendSeo')->name('sections.element.seo');
-            Route::post('frontend-element-seo/{key}/{id}', 'frontendSeoUpdate');
+            Route::post('frontend-element-seo/{key}/{id}', 'frontendSeoUpdate')->name('sections.element.seo.update');
             Route::post('update-seo', 'updateSeoContent')->name('seo.update');
             Route::post('remove/{id}', 'remove')->name('remove');
         });
@@ -510,7 +509,7 @@ Route::middleware('admin')->group(function () {
             Route::post('manage-section/{id}', 'manageSectionUpdate')->name('manage.section.update');
 
             Route::get('manage-seo/{id}', 'manageSeo')->name('manage.pages.seo');
-            Route::post('manage-seo/{id}', 'manageSeoStore');
+            Route::post('manage-seo/{id}', 'manageSeoStore')->name('manage.pages.seo.update');
         });
     });
 });
