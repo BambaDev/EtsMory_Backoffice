@@ -1,6 +1,10 @@
 # ViserMart Backoffice
 
-E-commerce admin panel built with Laravel 12. Reconstructed from ViserMart (Laravel 11) with modern conventions and PHP 8.3+ features.
+Backoffice e-commerce développé avec Laravel pour la gestion d’une boutique en ligne : produits, catégories, marques, commandes, paiements, promotions, utilisateurs, tickets support, paramètres système et localisation. Un README clair à la racine du dépôt aide les visiteurs à comprendre rapidement l’objectif du projet et comment l’exécuter localement [web:70][web:73].
+
+## Aperçu
+
+ViserMart Backoffice est une application d’administration conçue pour piloter les opérations d’un e-commerce depuis une interface web centralisée. Le projet couvre notamment :
 
 ## Stack
 
@@ -15,6 +19,17 @@ E-commerce admin panel built with Laravel 12. Reconstructed from ViserMart (Lara
 | Images      | Intervention Image v4             |
 | Excel       | Maatwebsite Excel                 |
 | API auth    | Laravel Sanctum                   |
+
+- Authentification administrateur
+- Gestion du catalogue produits
+- Gestion des catégories et marques
+- Gestion des commandes
+- Gestion des paiements et dépôts
+- Gestion des utilisateurs
+- Gestion des promotions
+- Gestion des tickets support
+- Paramètres système
+- Système multilingue
 
 ## Features
 
@@ -34,6 +49,41 @@ E-commerce admin panel built with Laravel 12. Reconstructed from ViserMart (Lara
 - Multi-language support
 - Reports (sales, login history, notifications)
 - System info & maintenance mode
+
+## Stack technique
+
+- **Framework** : Laravel 12
+- **Langage** : PHP 8.4+
+- **Base de données** : MySQL
+- **Frontend admin** : Blade, JavaScript, CSS
+- **Environnement local recommandé** : Laragon
+- **Gestionnaire de dépendances PHP** : Composer
+- **Assets frontend** : Node.js / NPM si recompilation nécessaire
+
+## Fonctionnalités principales
+
+- Tableau de bord administrateur
+- Authentification admin sécurisée
+- Gestion complète du catalogue
+- Gestion des commandes et statuts
+- Gestion des promotions et coupons
+- Gestion des utilisateurs
+- Gestion des langues
+- Paramètres de configuration du site
+- Système de notifications
+- Gestion des pages frontend depuis l’admin
+
+## État actuel du projet
+
+Le backoffice admin est fonctionnel et les principales pages critiques ont été corrigées et validées. À ce stade :
+
+- Connexion admin fonctionnelle
+- Dashboard fonctionnel
+- Pages admin principales accessibles
+- Langue française ajoutée
+- Optimisations de performance de base appliquées
+- Plusieurs routes corrigées pour permettre la mise en cache Laravel
+
 
 ## Requirements
 
