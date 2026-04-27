@@ -69,7 +69,7 @@
 
                 let orderNumber = $('input[name=order_number]').val();
 
-                $.get(`{{ route('track.order', '') }}/${orderNumber}`, function(response) {
+                $.get(`{{ url('order-data') }}/${orderNumber}`, function(response) {
                     if (response.success) {
                         if (response.status == {{ Status::ORDER_CANCELED }}) {
                             $('.confirm-state, .processing-state, .dispatched-state, .delivered-state').removeClass('active');

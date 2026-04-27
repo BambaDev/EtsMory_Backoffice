@@ -1,16 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TicketController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CompareController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Frontend\TicketController;
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\CompareController;
+use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Gateway\PaymentController as GatewayPaymentController;
 use App\Http\Controllers\User\OrderController;
-use App\Http\Controllers\SiteController;
+use App\Http\Controllers\Frontend\SiteController;
 
 Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');

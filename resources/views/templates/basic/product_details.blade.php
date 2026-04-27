@@ -1,6 +1,19 @@
 @extends('Template::layouts.master')
 
 @section('content')
+    {{-- EtsMory breadcrumb --}}
+    <div class="tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50 tw-py-6">
+        <div class="tw-max-w-7xl tw-mx-auto tw-px-4">
+            <nav class="tw-flex tw-items-center tw-gap-2 tw-text-sm tw-text-gray-600">
+                <a href="{{ route('home') }}" class="hover:tw-text-orange-600 tw-no-underline tw-text-gray-600">@lang('Accueil')</a>
+                <i class="las la-angle-right tw-text-xs"></i>
+                <a href="{{ route('product.all') }}" class="hover:tw-text-orange-600 tw-no-underline tw-text-gray-600">@lang('Boutique')</a>
+                <i class="las la-angle-right tw-text-xs"></i>
+                <span class="tw-text-gray-800 tw-font-medium">{{ strLimit(__($product->name), 50) }}</span>
+            </nav>
+        </div>
+    </div>
+
     <div class="py-60">
         <div class="container">
             <div class="row g-4 g-xl-5">

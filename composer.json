@@ -30,6 +30,9 @@
         },
         "files": [
             "app/Http/Helpers/helpers.php"
+        ],
+        "classmap": [
+            "app/Traits/Auth"
         ]
     },
     "autoload-dev": {

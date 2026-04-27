@@ -19,9 +19,13 @@
         $rating = $request->has('rating');
     @endphp
 
-    <!-- Category Section Starts Here -->
-
-
+    {{-- EtsMory page header --}}
+    <div class="tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50 tw-py-8">
+        <div class="tw-max-w-7xl tw-mx-auto tw-px-4">
+            <h1 class="tw-text-2xl lg:tw-text-3xl tw-font-bold tw-text-gray-800">{{ __($pageTitle) }}</h1>
+            <p class="tw-text-gray-600 tw-mt-1">@lang('Parcourez notre catalogue de produits')</p>
+        </div>
+    </div>
 
     <div class="py-60">
         <div class="container">

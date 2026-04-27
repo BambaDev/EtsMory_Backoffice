@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group(base_path('routes/admin.php'));
 
             Route::middleware('web')
+                ->prefix('user')
                 ->name('user.')
                 ->group(base_path('routes/user.php'));
 
@@ -27,14 +28,21 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->redirectGuestsTo(fn () => route('user.login'));
+
+        $middleware->appendToGroup('web', [
+            \App\Http\Middleware\LanguageMiddleware::class,
+            \App\Http\Middleware\ActiveTemplateMiddleware::class,
+        ]);
+
         $middleware->alias([
             'admin'                  => \App\Http\Middleware\RedirectIfNotAdmin::class,
             'admin.guest'            => \App\Http\Middleware\RedirectIfAdmin::class,
             'check.status'           => \App\Http\Middleware\CheckStatus::class,
-            'check.module'           => \App\Http\Middleware\CheckModule::class,
-            'registration.complete'  => \App\Http\Middleware\Registration::class,
-            'maintenance'            => \App\Http\Middleware\Maintenance::class,
-            'checkout.step'          => \App\Http\Middleware\CheckoutStep::class,
+            'checkModule'            => \App\Http\Middleware\CheckModuleIsEnabled::class,
+            'registration.complete'  => \App\Http\Middleware\RegistrationStep::class,
+            'maintenance'            => \App\Http\Middleware\MaintenanceMode::class,
+            'checkout.step'          => \App\Http\Middleware\CheckoutStepMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -125,7 +125,7 @@ class FileManager {
      */
     protected function uploadImage() {
         $manager = new ImageManager(new Driver());
-        $image = $manager->read($this->file);
+        $image = $manager->decode($this->file);
 
         //resize the
         if ($this->size) {
@@ -141,7 +141,7 @@ class FileManager {
                 $this->removeFile($this->path . '/thumb_' . $this->old);
             }
             $thumb = explode('x', $this->thumb);
-            $manager->read($this->file)->resize($thumb[0], $thumb[1])->save($this->path . '/thumb_' . $this->filename);
+            $manager->decode($this->file)->resize($thumb[0], $thumb[1])->save($this->path . '/thumb_' . $this->filename);
         }
     }
 

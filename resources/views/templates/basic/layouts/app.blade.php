@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('assets/global/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/global/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/global/css/line-awesome.min.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { prefix: 'tw-', corePlugins: { preflight: false } }</script>
     @stack('style-lib')
     <link rel="stylesheet" href="{{ asset(activeTemplate(true) . 'css/main.css') }}">
     <link rel="stylesheet" href="{{ asset(activeTemplate(true) . 'css/color.php?color=' . gs('base_color')) }}">

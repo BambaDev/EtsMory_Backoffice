@@ -93,7 +93,7 @@
             _token: `{{ csrf_token() }}`
         };
 
-        const action = `{{ route('cart.remove', '') }}/${$(this).data('id')}`;
+        const action = `{{ url('remove-from-cart') }}/${$(this).data('id')}`;
 
         $.post(action, data,
             function(response) {
@@ -156,7 +156,7 @@
             quantity: quantity
         }
 
-        $.post(`{{ route('cart.update', '') }}/${cartItem.data().id}`, data,
+        $.post(`{{ url('cart-update') }}/${cartItem.data().id}`, data,
             function(response) {
                 if (response.status === 'error') {
                     cartItem.find('[name=quantity]').val(response.quantity);
@@ -268,7 +268,7 @@
             _token: `{{ csrf_token() }}`
         }
 
-        $.post(`{{ route('wishlist.add', '') }}/${productId}`, data).done((response) => {
+        $.post(`{{ url('add-to-wishlist') }}/${productId}`, data).done((response) => {
             if (response.status === 'success') {
                 getWishlistData();
                 getWishlistTotal();
@@ -292,7 +292,7 @@
             _token: `{{ csrf_token() }}`
         }
 
-        $.post(`{{ route('wishlist.remove', '') }}/${id}`, data).done((response) => {
+        $.post(`{{ url('remove-from-wishlist') }}/${id}`, data).done((response) => {
             if (response.status === 'success') {
                 getWishlistData();
                 getWishlistTotal();
@@ -356,7 +356,7 @@
     }
 
     const quickViewClickHandler = function() {
-        $.get(`{{ route('product.detail', '') }}/${$(this).data('product')}`).done((response) => {
+        $.get(`{{ url('product') }}/${$(this).data('product')}`).done((response) => {
             quickViewModal.find('.modal-body').html(response);
             console.log(response);
 

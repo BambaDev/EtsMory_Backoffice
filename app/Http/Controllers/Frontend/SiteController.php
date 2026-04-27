@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Constants\Status;
 use App\Models\AdminNotification;
 use App\Models\Brand;
@@ -11,6 +12,7 @@ use App\Models\Language;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Page;
+use App\Models\Product;
 use App\Models\Subscriber;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
@@ -25,7 +27,14 @@ class SiteController extends Controller {
         $sections    = Page::where('tempname', activeTemplate())->where('slug', '/')->first();
         $seoContents = $sections->seo_content;
         $seoImage    = @$seoContents->image ? getImage(getFilePath('seo') . '/' . @$seoContents->image, getFileSize('seo')) : null;
-        return view('Template::home', compact('pageTitle', 'sections', 'seoContents', 'seoImage'));
+
+        $banners          = \App\Models\PromotionalBanner::orderBy('id', 'desc')->take(3)->get();
+        $featuredProducts = Product::published()->with(['reviews', 'categories', 'displayImage', 'productVariants'])->latest()->take(8)->get();
+        $topSelling       = Product::topSales(4);
+        $offers           = \App\Models\Offer::where('status', 1)->whereDate('ends_at', '>=', now())->take(4)->get();
+        $collections      = \App\Models\ProductCollection::take(4)->get();
+
+        return view('Template::home', compact('pageTitle', 'sections', 'seoContents', 'seoImage', 'banners', 'featuredProducts', 'topSelling', 'offers', 'collections'));
     }
 
     public function about() {
