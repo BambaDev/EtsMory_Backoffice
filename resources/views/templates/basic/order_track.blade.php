@@ -119,9 +119,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const cleanNumber = trackingNumber.replace(/^#/, '');
         console.log('Searching for order:', cleanNumber);
 
-        // Hide previous results
+        // Reset all states - hide everything first
         orderResults.classList.add('tw-hidden');
         notFoundError.classList.add('tw-hidden');
+        loadingState.classList.add('tw-hidden');
+
+        // Show loading
         loadingState.classList.remove('tw-hidden');
 
         try {
@@ -134,6 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             console.log('Response status:', response.status);
+
+            // Hide loading
             loadingState.classList.add('tw-hidden');
 
             if (!response.ok) {
