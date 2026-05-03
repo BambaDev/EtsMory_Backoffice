@@ -10,19 +10,22 @@
                 'title' => 'Supermarché en Ligne de Côte d\'Ivoire',
                 'subtitle' => 'Produits frais livrés à votre porte',
                 'cta' => 'Acheter maintenant',
-                'gradient' => 'tw-from-orange-600 tw-via-orange-500 tw-to-green-600'
+                'gradient' => 'tw-from-orange-600 tw-via-orange-500 tw-to-green-600',
+                'image' => 'fruit.png'
             ],
             [
                 'title' => 'Promo Flash du Weekend',
                 'subtitle' => 'Jusqu\'à -40% sur les produits frais',
                 'cta' => 'Voir les offres',
-                'gradient' => 'tw-from-green-700 tw-via-green-500 tw-to-orange-400'
+                'gradient' => 'tw-from-green-700 tw-via-green-500 tw-to-orange-400',
+                'image' => 'viande.png'
             ],
             [
                 'title' => 'Nouveaux Arrivages',
                 'subtitle' => 'Poisson frais et viande de qualité',
                 'cta' => 'Découvrir',
-                'gradient' => 'tw-from-green-800 tw-via-orange-600 tw-to-yellow-500'
+                'gradient' => 'tw-from-green-800 tw-via-orange-600 tw-to-yellow-500',
+                'image' => 'poisson.png'
             ]
         ];
         @endphp
@@ -44,12 +47,11 @@
                             {{ $slide['cta'] }}
                         </a>
                     </div>
-                    @if($banners->count() > 0 && $index === 0)
                     <div class="tw-hidden lg:tw-block">
-                        <img src="{{ getImage(getFilePath('promotionalBanner') . '/' . $banners->first()->image) }}"
-                            alt="Hero" class="tw-w-full tw-h-80 tw-object-cover tw-rounded-2xl tw-shadow-2xl">
+                        <img src="{{ asset('assets/images/product/' . $slide['image']) }}"
+                            alt="{{ $slide['title'] }}"
+                            class="tw-w-full tw-h-80 tw-object-cover tw-rounded-2xl tw-shadow-2xl">
                     </div>
-                    @endif
                 </div>
             </div>
         </div>
