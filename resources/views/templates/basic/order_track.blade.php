@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('Template::layouts.master')
 @section('content')
 <div class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-4xl mx-auto px-4">
