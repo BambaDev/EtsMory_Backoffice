@@ -36,6 +36,13 @@
         </div>
 
         <div id="orderResults" class="tw-hidden tw-space-y-6">
+            <!-- Nouvelle recherche button -->
+            <div class="tw-flex tw-justify-end tw-mb-4">
+                <button id="newSearchBtn" class="tw-px-6 tw-py-2 tw-bg-orange-500 tw-text-white tw-font-semibold tw-rounded-xl hover:tw-bg-orange-600 tw-transition-colors tw-border-0 tw-cursor-pointer">
+                    🔍 Nouvelle recherche
+                </button>
+            </div>
+
             <!-- Order Summary -->
             <div class="tw-bg-white tw-rounded-2xl tw-shadow-lg tw-p-6">
                 <div class="tw-flex tw-items-start tw-justify-between tw-mb-6">
@@ -108,12 +115,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const orderResults = document.getElementById('orderResults');
     const notFoundError = document.getElementById('notFoundError');
     const trackingInput = document.getElementById('trackingNumber');
+    const newSearchBtn = document.getElementById('newSearchBtn');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    // Nouvelle recherche
+    newSearchBtn.addEventListener('click', function() {
+        console.log('New search clicked');
+        orderResults.classList.add('tw-hidden');
+        notFoundError.classList.add('tw-hidden');
+        trackingInput.value = '';
+        trackingInput.focus();
+    });
 
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
+        console.log('Form submitted');
 
         const trackingNumber = trackingInput.value.trim();
-        if (!trackingNumber) return;
+        if (!trackingNumber) {
+            console.log('Empty tracking number');
+            return;
+        }
+
+        // Désactiver le bouton pendant la recherche
+        submitBtn.disabled = true;
 
         // Clean tracking number (remove # if present)
         const cleanNumber = trackingNumber.replace(/^#/, '');
@@ -162,6 +187,10 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error fetching order:', error);
             loadingState.classList.add('tw-hidden');
             notFoundError.classList.remove('tw-hidden');
+        } finally {
+            // Réactiver le bouton
+            submitBtn.disabled = false;
+            console.log('Search completed, button re-enabled');
         }
     });
 
