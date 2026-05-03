@@ -117,11 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Clean tracking number (remove # if present)
         const cleanNumber = trackingNumber.replace(/^#/, '');
+        console.log('Searching for order:', cleanNumber);
 
         // Hide previous results
-        orderResults.classList.add('hidden');
-        notFoundError.classList.add('hidden');
-        loadingState.classList.remove('hidden');
+        orderResults.classList.add('tw-hidden');
+        notFoundError.classList.add('tw-hidden');
+        loadingState.classList.remove('tw-hidden');
 
         try {
             const response = await fetch(`{{ url('order-data') }}/${cleanNumber}`, {
@@ -132,25 +133,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            loadingState.classList.add('hidden');
+            console.log('Response status:', response.status);
+            loadingState.classList.add('tw-hidden');
 
             if (!response.ok) {
-                notFoundError.classList.remove('hidden');
+                console.error('Response not OK:', response.status);
+                notFoundError.classList.remove('tw-hidden');
                 return;
             }
 
             const data = await response.json();
+            console.log('Received data:', data);
 
-            if (data.success) {
+            if (data.success && data.order) {
+                console.log('Displaying order:', data.order);
                 displayOrderData(data.order);
-                orderResults.classList.remove('hidden');
+                orderResults.classList.remove('tw-hidden');
             } else {
-                notFoundError.classList.remove('hidden');
+                console.error('No order in response or success=false');
+                notFoundError.classList.remove('tw-hidden');
             }
         } catch (error) {
             console.error('Error fetching order:', error);
-            loadingState.classList.add('hidden');
-            notFoundError.classList.remove('hidden');
+            loadingState.classList.add('tw-hidden');
+            notFoundError.classList.remove('tw-hidden');
         }
     });
 

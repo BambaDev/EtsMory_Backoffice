@@ -265,8 +265,13 @@ class SiteController extends Controller {
 
         // Préparer les items de la commande
         $items = $orderData->orderDetail->map(function($detail) {
+            $productName = 'Produit indisponible';
+            if ($detail->product) {
+                $productName = $detail->product->name;
+            }
+
             return [
-                'name' => $detail->product ? $detail->product->name : $detail->product_name,
+                'name' => $productName,
                 'quantity' => $detail->quantity,
                 'price' => $detail->price,
             ];
