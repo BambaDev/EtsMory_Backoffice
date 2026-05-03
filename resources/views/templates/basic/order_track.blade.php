@@ -1,100 +1,100 @@
 @extends('Template::layouts.master')
 @section('content')
-<div class="min-h-screen bg-gray-50 py-12">
-    <div class="max-w-4xl mx-auto px-4">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">Suivre ma commande</h1>
-            <p class="text-gray-600 max-w-2xl mx-auto">
+<div class="tw-min-h-screen tw-bg-gray-50 tw-py-12">
+    <div class="tw-max-w-4xl tw-mx-auto tw-px-4">
+        <div class="tw-text-center tw-mb-12">
+            <h1 class="tw-text-4xl tw-font-bold tw-text-gray-800 tw-mb-4">Suivre ma commande</h1>
+            <p class="tw-text-gray-600 tw-max-w-2xl tw-mx-auto">
                 Entrez votre numéro de commande pour suivre l'état de votre livraison en temps réel.
             </p>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
-            <form id="trackOrderForm" class="flex flex-col sm:flex-row gap-4">
+        <div class="tw-bg-white tw-rounded-2xl tw-shadow-lg tw-p-8 tw-mb-8">
+            <form id="trackOrderForm" class="tw-flex tw-flex-col sm:tw-flex-row tw-gap-4">
                 <input
                     type="text"
                     id="trackingNumber"
                     name="tracking_number"
                     placeholder="Ex: ESM123456 ou #ESM123456"
-                    class="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:outline-none text-sm"
+                    class="tw-flex-1 tw-px-4 tw-py-3 tw-border-2 tw-border-gray-200 tw-rounded-xl focus:tw-border-orange-500 focus:tw-outline-none tw-text-sm"
                     required
                 />
                 <button
                     type="submit"
-                    class="px-8 py-3 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition-colors whitespace-nowrap"
+                    class="tw-px-8 tw-py-3 tw-bg-orange-500 tw-text-white tw-font-bold tw-rounded-xl hover:tw-bg-orange-600 tw-transition-colors tw-whitespace-nowrap tw-border-0 tw-cursor-pointer"
                 >
                     Suivre
                 </button>
             </form>
         </div>
 
-        <div id="loadingState" class="hidden">
-            <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
-                <p class="mt-4 text-gray-600">Recherche en cours...</p>
+        <div id="loadingState" class="tw-hidden">
+            <div class="tw-bg-white tw-rounded-2xl tw-shadow-lg tw-p-8 tw-text-center">
+                <div class="tw-inline-block tw-animate-spin tw-rounded-full tw-h-8 tw-w-8 tw-border-b-2 tw-border-orange-500"></div>
+                <p class="tw-mt-4 tw-text-gray-600">Recherche en cours...</p>
             </div>
         </div>
 
-        <div id="orderResults" class="hidden space-y-6">
+        <div id="orderResults" class="tw-hidden tw-space-y-6">
             <!-- Order Summary -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <div class="flex items-start justify-between mb-6">
+            <div class="tw-bg-white tw-rounded-2xl tw-shadow-lg tw-p-6">
+                <div class="tw-flex tw-items-start tw-justify-between tw-mb-6">
                     <div>
-                        <p class="text-gray-600 text-sm">Numéro de commande</p>
-                        <h2 class="text-2xl font-bold text-gray-800" id="orderNumber"></h2>
+                        <p class="tw-text-gray-600 tw-text-sm">Numéro de commande</p>
+                        <h2 class="tw-text-2xl tw-font-bold tw-text-gray-800" id="orderNumber"></h2>
                     </div>
-                    <div class="text-right">
-                        <p class="text-gray-600 text-sm">Total</p>
-                        <p class="text-2xl font-bold text-orange-600" id="orderTotal"></p>
+                    <div class="tw-text-right">
+                        <p class="tw-text-gray-600 tw-text-sm">Total</p>
+                        <p class="tw-text-2xl tw-font-bold tw-text-orange-600" id="orderTotal"></p>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4 pt-6 border-t border-gray-100">
+                <div class="tw-grid tw-grid-cols-2 tw-gap-4 tw-pt-6 tw-border-t tw-border-gray-100">
                     <div>
-                        <p class="text-gray-600 text-sm">Commandée le</p>
-                        <p class="font-semibold text-gray-800" id="orderDate"></p>
+                        <p class="tw-text-gray-600 tw-text-sm">Commandée le</p>
+                        <p class="tw-font-semibold tw-text-gray-800" id="orderDate"></p>
                     </div>
                     <div>
-                        <p class="text-gray-600 text-sm">Livraison estimée</p>
-                        <p class="font-semibold text-green-600" id="orderDelivery"></p>
+                        <p class="tw-text-gray-600 tw-text-sm">Livraison estimée</p>
+                        <p class="tw-font-semibold tw-text-green-600" id="orderDelivery"></p>
                     </div>
                 </div>
             </div>
 
             <!-- Status Timeline -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-lg font-bold text-gray-800 mb-6">Statut de livraison</h3>
-                <div id="orderTimeline" class="space-y-4"></div>
+            <div class="tw-bg-white tw-rounded-2xl tw-shadow-lg tw-p-6">
+                <h3 class="tw-text-lg tw-font-bold tw-text-gray-800 tw-mb-6">Statut de livraison</h3>
+                <div id="orderTimeline" class="tw-space-y-4"></div>
             </div>
 
             <!-- Items -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">Articles commandés</h3>
-                <div id="orderItems" class="space-y-3"></div>
+            <div class="tw-bg-white tw-rounded-2xl tw-shadow-lg tw-p-6">
+                <h3 class="tw-text-lg tw-font-bold tw-text-gray-800 tw-mb-4">Articles commandés</h3>
+                <div id="orderItems" class="tw-space-y-3"></div>
             </div>
 
             <!-- Contact -->
-            <div class="bg-gradient-to-r from-orange-50 to-green-50 rounded-2xl p-6">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">Besoin d'aide ?</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <a href="tel:+2250700000000" class="flex items-center justify-center gap-2 py-3 bg-white rounded-xl hover:bg-gray-50 transition-colors">
-                        <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50 tw-rounded-2xl tw-p-6">
+                <h3 class="tw-text-lg tw-font-bold tw-text-gray-800 tw-mb-4">Besoin d'aide ?</h3>
+                <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 tw-gap-4">
+                    <a href="tel:+2250700000000" class="tw-flex tw-items-center tw-justify-center tw-gap-2 tw-py-3 tw-bg-white tw-rounded-xl hover:tw-bg-gray-50 tw-transition-colors tw-no-underline">
+                        <svg class="tw-w-5 tw-h-5 tw-text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                         </svg>
-                        <span class="font-semibold text-gray-800">+225 07 00 00 00</span>
+                        <span class="tw-font-semibold tw-text-gray-800">+225 07 00 00 00</span>
                     </a>
-                    <a href="mailto:support@etsmory.ci" class="flex items-center justify-center gap-2 py-3 bg-white rounded-xl hover:bg-gray-50 transition-colors">
-                        <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="mailto:support@etsmory.ci" class="tw-flex tw-items-center tw-justify-center tw-gap-2 tw-py-3 tw-bg-white tw-rounded-xl hover:tw-bg-gray-50 tw-transition-colors tw-no-underline">
+                        <svg class="tw-w-5 tw-h-5 tw-text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
-                        <span class="font-semibold text-gray-800">support@etsmory.ci</span>
+                        <span class="tw-font-semibold tw-text-gray-800">support@etsmory.ci</span>
                     </a>
                 </div>
             </div>
         </div>
 
-        <div id="notFoundError" class="hidden bg-yellow-100 border border-yellow-400 rounded-2xl p-8 text-center text-yellow-700">
-            <p class="text-lg font-semibold">⚠️ Commande non trouvée</p>
-            <p class="text-sm mt-2">Vérifiez votre numéro de commande et réessayez.</p>
+        <div id="notFoundError" class="tw-hidden tw-bg-yellow-100 tw-border tw-border-yellow-400 tw-rounded-2xl tw-p-8 tw-text-center tw-text-yellow-700">
+            <p class="tw-text-lg tw-font-semibold">⚠️ Commande non trouvée</p>
+            <p class="tw-text-sm tw-mt-2">Vérifiez votre numéro de commande et réessayez.</p>
         </div>
     </div>
 </div>
@@ -165,22 +165,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const timeline = document.getElementById('orderTimeline');
         const steps = getOrderSteps(order.status, order.created_at, order.updated_at);
         timeline.innerHTML = steps.map((step, index) => `
-            <div class="flex gap-4">
-                <div class="flex flex-col items-center">
-                    <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+            <div class="tw-flex tw-gap-4">
+                <div class="tw-flex tw-flex-col tw-items-center">
+                    <div class="tw-w-8 tw-h-8 tw-rounded-full tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-sm ${
                         step.completed
-                            ? 'bg-green-100 text-green-600'
-                            : 'bg-gray-100 text-gray-400'
+                            ? 'tw-bg-green-100 tw-text-green-600'
+                            : 'tw-bg-gray-100 tw-text-gray-400'
                     }">
                         ${step.completed ? '✓' : (index + 1)}
                     </div>
                     ${index < steps.length - 1 ? `
-                        <div class="w-1 h-12 mt-2 ${step.completed ? 'bg-green-100' : 'bg-gray-100'}"></div>
+                        <div class="tw-w-1 tw-h-12 tw-mt-2 ${step.completed ? 'tw-bg-green-100' : 'tw-bg-gray-100'}"></div>
                     ` : ''}
                 </div>
-                <div class="py-2">
-                    <p class="font-semibold text-gray-800">${step.label}</p>
-                    <p class="text-sm text-gray-600">${step.date}</p>
+                <div class="tw-py-2">
+                    <p class="tw-font-semibold tw-text-gray-800">${step.label}</p>
+                    <p class="tw-text-sm tw-text-gray-600">${step.date}</p>
                 </div>
             </div>
         `).join('');
@@ -188,12 +188,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Order Items
         const itemsContainer = document.getElementById('orderItems');
         itemsContainer.innerHTML = order.items.map((item, index) => `
-            <div class="flex items-center justify-between py-3 border-b border-gray-100 ${index === order.items.length - 1 ? 'last:border-0' : ''}">
-                <div class="flex-1">
-                    <p class="font-semibold text-gray-800">${item.name}</p>
-                    <p class="text-sm text-gray-600">Quantité: ${item.quantity}</p>
+            <div class="tw-flex tw-items-center tw-justify-between tw-py-3 tw-border-b tw-border-gray-100 ${index === order.items.length - 1 ? 'last:tw-border-0' : ''}">
+                <div class="tw-flex-1">
+                    <p class="tw-font-semibold tw-text-gray-800">${item.name}</p>
+                    <p class="tw-text-sm tw-text-gray-600">Quantité: ${item.quantity}</p>
                 </div>
-                <p class="font-bold text-orange-600">${formatCurrency(item.price * item.quantity)}</p>
+                <p class="tw-font-bold tw-text-orange-600">${formatCurrency(item.price * item.quantity)}</p>
             </div>
         `).join('');
     }
