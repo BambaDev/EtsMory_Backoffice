@@ -256,18 +256,35 @@ class SiteController extends Controller {
 
     public function getOrderTrackData($orderNumber) {
 
-        $orderData = Order::isValidOrder()->where('order_number', $orderNumber)->first();
+        $orderData = Order::isValidOrder()->with('orderDetail.product')->where('order_number', $orderNumber)->first();
 
         if (!$orderData) {
             $notify = 'No order found with this order number';
-            return response()->json(['error' => $notify]);
+            return response()->json(['success' => false, 'error' => $notify]);
         }
+
+        // Préparer les items de la commande
+        $items = $orderData->orderDetail->map(function($detail) {
+            return [
+                'name' => $detail->product ? $detail->product->name : $detail->product_name,
+                'quantity' => $detail->quantity,
+                'price' => $detail->price,
+            ];
+        });
 
         return response()->json([
             'success' => true,
-            'payment_status' => $orderData->payment_status,
-            'status' => $orderData->status,
-            'is_cod' => $orderData->is_cod,
+            'order' => [
+                'number' => $orderData->order_number,
+                'amount' => $orderData->total_amount,
+                'created_at' => $orderData->created_at,
+                'updated_at' => $orderData->updated_at,
+                'status' => $orderData->status,
+                'payment_status' => $orderData->payment_status,
+                'is_cod' => $orderData->is_cod,
+                'estimated_delivery' => 'Livraison sous 24-48h',
+                'items' => $items,
+            ]
         ]);
     }
 }
