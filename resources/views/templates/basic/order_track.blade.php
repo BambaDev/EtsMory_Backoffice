@@ -1,173 +1,263 @@
-@extends('Template::layouts.master')
+@extends('layouts.app')
 
 @section('content')
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Suivre ma commande</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Entrez votre numéro de commande pour suivre l'état de votre livraison en temps réel.
+            </p>
+        </div>
 
-{{-- EtsMory breadcrumb --}}
-<div class="tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50 tw-py-6">
-    <div class="tw-max-w-7xl tw-mx-auto tw-px-4">
-        <nav class="tw-flex tw-items-center tw-gap-2 tw-text-sm tw-text-gray-600">
-            <a href="{{ route('home') }}" class="hover:tw-text-orange-600 tw-no-underline tw-text-gray-600">@lang('Accueil')</a>
-            <i class="las la-angle-right tw-text-xs"></i>
-            <span class="tw-text-gray-800 tw-font-medium">@lang('Suivi de commande')</span>
-        </nav>
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <form id="trackOrderForm" class="flex flex-col sm:flex-row gap-4">
+                <input
+                    type="text"
+                    id="trackingNumber"
+                    name="tracking_number"
+                    placeholder="Ex: ESM123456 ou #ESM123456"
+                    class="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:outline-none text-sm"
+                    required
+                />
+                <button
+                    type="submit"
+                    class="px-8 py-3 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition-colors whitespace-nowrap"
+                >
+                    Suivre
+                </button>
+            </form>
+        </div>
+
+        <div id="loadingState" class="hidden">
+            <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+                <p class="mt-4 text-gray-600">Recherche en cours...</p>
+            </div>
+        </div>
+
+        <div id="orderResults" class="hidden space-y-6">
+            <!-- Order Summary -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <div class="flex items-start justify-between mb-6">
+                    <div>
+                        <p class="text-gray-600 text-sm">Numéro de commande</p>
+                        <h2 class="text-2xl font-bold text-gray-800" id="orderNumber"></h2>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-gray-600 text-sm">Total</p>
+                        <p class="text-2xl font-bold text-orange-600" id="orderTotal"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 pt-6 border-t border-gray-100">
+                    <div>
+                        <p class="text-gray-600 text-sm">Commandée le</p>
+                        <p class="font-semibold text-gray-800" id="orderDate"></p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-sm">Livraison estimée</p>
+                        <p class="font-semibold text-green-600" id="orderDelivery"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Timeline -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-6">Statut de livraison</h3>
+                <div id="orderTimeline" class="space-y-4"></div>
+            </div>
+
+            <!-- Items -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Articles commandés</h3>
+                <div id="orderItems" class="space-y-3"></div>
+            </div>
+
+            <!-- Contact -->
+            <div class="bg-gradient-to-r from-orange-50 to-green-50 rounded-2xl p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Besoin d'aide ?</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a href="tel:+2250700000000" class="flex items-center justify-center gap-2 py-3 bg-white rounded-xl hover:bg-gray-50 transition-colors">
+                        <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        <span class="font-semibold text-gray-800">+225 07 00 00 00</span>
+                    </a>
+                    <a href="mailto:support@etsmory.ci" class="flex items-center justify-center gap-2 py-3 bg-white rounded-xl hover:bg-gray-50 transition-colors">
+                        <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="font-semibold text-gray-800">support@etsmory.ci</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="notFoundError" class="hidden bg-yellow-100 border border-yellow-400 rounded-2xl p-8 text-center text-yellow-700">
+            <p class="text-lg font-semibold">⚠️ Commande non trouvée</p>
+            <p class="text-sm mt-2">Vérifiez votre numéro de commande et réessayez.</p>
+        </div>
     </div>
 </div>
-
-{{-- Hero section --}}
-<section class="tw-bg-white tw-py-16">
-    <div class="tw-max-w-4xl tw-mx-auto tw-px-4 tw-text-center">
-        <div class="tw-w-16 tw-h-16 tw-bg-orange-100 tw-rounded-full tw-flex tw-items-center tw-justify-center tw-mx-auto tw-mb-6">
-            <i class="las la-shipping-fast tw-text-4xl tw-text-orange-500"></i>
-        </div>
-        <h1 class="tw-text-4xl lg:tw-text-5xl tw-font-bold tw-text-gray-800 tw-mb-6">
-            @lang('Suivez votre commande')
-        </h1>
-        <p class="tw-text-xl tw-text-gray-600">
-            @lang('Entrez votre numéro de commande pour connaître son statut en temps réel')
-        </p>
-    </div>
-</section>
-
-{{-- Order Track Section --}}
-<section class="tw-py-16 tw-bg-gray-50">
-    <div class="tw-max-w-5xl tw-mx-auto tw-px-4">
-
-        {{-- Track Form --}}
-        <div class="tw-mb-12">
-            <div class="tw-bg-white tw-rounded-2xl tw-shadow-sm tw-border tw-border-gray-100 tw-p-8">
-                <form class="order-track-form" id="order-track">
-                    <div class="tw-flex tw-flex-col sm:tw-flex-row tw-gap-4">
-                        <input type="text"
-                            name="order_number"
-                            placeholder="@lang('Entrez votre numéro de commande')"
-                            class="tw-flex-1 tw-px-6 tw-py-4 tw-rounded-xl tw-border tw-border-gray-300 focus:tw-border-orange-500 focus:tw-ring-2 focus:tw-ring-orange-200 focus:tw-outline-none tw-text-lg"
-                            required>
-                        <button type="submit"
-                            class="track-btn tw-px-8 tw-py-4 tw-bg-gradient-to-r tw-from-orange-500 tw-to-green-600 tw-text-white tw-rounded-xl tw-font-semibold tw-text-lg hover:tw-shadow-lg tw-transition-all tw-border-0 tw-cursor-pointer tw-whitespace-nowrap">
-                            @lang('Suivre') <i class="las la-search tw-ml-2"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        {{-- Order Status Timeline --}}
-        <div class="tw-bg-white tw-rounded-2xl tw-shadow-sm tw-border tw-border-gray-100 tw-p-8 lg:tw-p-12">
-            <h3 class="tw-text-2xl tw-font-bold tw-text-gray-800 tw-mb-8 tw-text-center">
-                @lang('Statut de la commande')
-            </h3>
-
-            <div class="order-track-wrapper tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-4 tw-gap-6 lg:tw-gap-8">
-                {{-- Pending --}}
-                <div class="confirm-state order-track-item tw-text-center">
-                    <div class="thumb tw-w-20 tw-h-20 tw-bg-gray-100 tw-rounded-full tw-flex tw-items-center tw-justify-center tw-mx-auto tw-mb-4 tw-transition-all">
-                        <i class="las la-check-square tw-text-4xl tw-text-gray-400"></i>
-                    </div>
-                    <div class="content">
-                        <h6 class="title tw-font-semibold tw-text-gray-800 tw-mb-2">@lang('En attente')</h6>
-                        <div class="tw-w-12 tw-h-1 tw-bg-gray-200 tw-rounded-full tw-mx-auto tw-mt-3"></div>
-                    </div>
-                </div>
-
-                {{-- Processing --}}
-                <div class="order-track-item processing-state tw-text-center">
-                    <div class="thumb tw-w-20 tw-h-20 tw-bg-gray-100 tw-rounded-full tw-flex tw-items-center tw-justify-center tw-mx-auto tw-mb-4 tw-transition-all">
-                        <i class="las la-sync-alt tw-text-4xl tw-text-gray-400"></i>
-                    </div>
-                    <div class="content">
-                        <h6 class="title tw-font-semibold tw-text-gray-800 tw-mb-2">@lang('En traitement')</h6>
-                        <div class="tw-w-12 tw-h-1 tw-bg-gray-200 tw-rounded-full tw-mx-auto tw-mt-3"></div>
-                    </div>
-                </div>
-
-                {{-- Dispatched --}}
-                <div class="order-track-item dispatched-state tw-text-center">
-                    <div class="thumb tw-w-20 tw-h-20 tw-bg-gray-100 tw-rounded-full tw-flex tw-items-center tw-justify-center tw-mx-auto tw-mb-4 tw-transition-all">
-                        <i class="las la-truck-pickup tw-text-4xl tw-text-gray-400"></i>
-                    </div>
-                    <div class="content">
-                        <h6 class="title tw-font-semibold tw-text-gray-800 tw-mb-2">@lang('Expédié')</h6>
-                        <div class="tw-w-12 tw-h-1 tw-bg-gray-200 tw-rounded-full tw-mx-auto tw-mt-3"></div>
-                    </div>
-                </div>
-
-                {{-- Delivered --}}
-                <div class="order-track-item delivered-state tw-text-center">
-                    <div class="thumb tw-w-20 tw-h-20 tw-bg-gray-100 tw-rounded-full tw-flex tw-items-center tw-justify-center tw-mx-auto tw-mb-4 tw-transition-all">
-                        <i class="las la-map-signs tw-text-4xl tw-text-gray-400"></i>
-                    </div>
-                    <div class="content">
-                        <h6 class="title tw-font-semibold tw-text-gray-800 tw-mb-2">@lang('Livré')</h6>
-                        <div class="tw-w-12 tw-h-1 tw-bg-gray-200 tw-rounded-full tw-mx-auto tw-mt-3"></div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Help Text --}}
-            <div class="tw-mt-12 tw-text-center tw-text-gray-600">
-                <p class="tw-mb-0">
-                    @lang('Besoin d\'aide ?')
-                    <a href="{{ route('contact') }}" class="tw-text-orange-500 hover:tw-text-orange-600 tw-font-medium tw-no-underline">
-                        @lang('Contactez notre service client')
-                    </a>
-                </p>
-            </div>
-        </div>
-
-    </div>
-</section>
-
 @endsection
 
 @push('script')
-    <script>
-        'use strict';
-        (function($) {
-            $(document).on('submit', '#order-track', function(e) {
-                e.preventDefault();
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('trackOrderForm');
+    const loadingState = document.getElementById('loadingState');
+    const orderResults = document.getElementById('orderResults');
+    const notFoundError = document.getElementById('notFoundError');
+    const trackingInput = document.getElementById('trackingNumber');
 
-                let orderNumber = $('input[name=order_number]').val();
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
 
-                $.get(`{{ url('order-data') }}/${orderNumber}`, function(response) {
-                    if (response.success) {
-                        if (response.status == {{ Status::ORDER_CANCELED }}) {
-                            $('.confirm-state, .processing-state, .dispatched-state, .delivered-state').removeClass('active');
-                            notify('error', 'This order is canceled by admin');
-                        } else if (response.status == {{ Status::ORDER_RETURNED }}) {
-                            $('.confirm-state, .processing-state, .dispatched-state, .delivered-state').removeClass('active');
-                            notify('error', 'This order is cancelled by the customer');
-                        } else {
-                            response.status >= '{{ Status::ORDER_PENDING }}' ? $('.confirm-state').addClass('active') : $('.confirm-state').removeClass('active');
+        const trackingNumber = trackingInput.value.trim();
+        if (!trackingNumber) return;
 
-                            response.status >= '{{ Status::ORDER_PROCESSING }}' ? $('.processing-state').addClass('active') : $('.processing-state').removeClass('active');
+        // Clean tracking number (remove # if present)
+        const cleanNumber = trackingNumber.replace(/^#/, '');
 
-                            response.status >= '{{ Status::ORDER_DISPATCHED }}' ? $('.dispatched-state').addClass('active') : $('.dispatched-state').removeClass('active');
+        // Hide previous results
+        orderResults.classList.add('hidden');
+        notFoundError.classList.add('hidden');
+        loadingState.classList.remove('hidden');
 
-                            response.status >= '{{ Status::ORDER_DELIVERED }}' ? $('.delivered-state').addClass('active') : $('.delivered-state').removeClass('active');
-                        }
-                    } else {
-                        $('.confirm-state, .processing-state, .dispatched-state, .delivered-state').removeClass('active');
-                        notify('error', response.error);
-                    }
-
-                    $('.track-btn').attr('disabled', false);
-                });
+        try {
+            const response = await fetch(`{{ url('order-data') }}/${cleanNumber}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             });
-        })(jQuery)
-    </script>
-@endpush
 
-@push('style')
-    <style>
-        /* EtsMory Order Track Active States */
-        .order-track-item.active .thumb {
-            background: linear-gradient(135deg, #f97316 0%, #16a34a 100%);
+            loadingState.classList.add('hidden');
+
+            if (!response.ok) {
+                notFoundError.classList.remove('hidden');
+                return;
+            }
+
+            const data = await response.json();
+
+            if (data.success) {
+                displayOrderData(data.order);
+                orderResults.classList.remove('hidden');
+            } else {
+                notFoundError.classList.remove('hidden');
+            }
+        } catch (error) {
+            console.error('Error fetching order:', error);
+            loadingState.classList.add('hidden');
+            notFoundError.classList.remove('hidden');
         }
-        .order-track-item.active .thumb i {
-            color: white;
-        }
-        .order-track-item.active .content .tw-w-12 {
-            background: linear-gradient(90deg, #f97316 0%, #16a34a 100%);
-        }
-    </style>
+    });
+
+    function displayOrderData(order) {
+        // Order Summary
+        document.getElementById('orderNumber').textContent = '#' + order.number;
+        document.getElementById('orderTotal').textContent = formatCurrency(order.amount);
+        document.getElementById('orderDate').textContent = formatDate(order.created_at);
+        document.getElementById('orderDelivery').textContent = order.estimated_delivery || 'Bientôt disponible';
+
+        // Timeline
+        const timeline = document.getElementById('orderTimeline');
+        const steps = getOrderSteps(order.status, order.created_at, order.updated_at);
+        timeline.innerHTML = steps.map((step, index) => `
+            <div class="flex gap-4">
+                <div class="flex flex-col items-center">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                        step.completed
+                            ? 'bg-green-100 text-green-600'
+                            : 'bg-gray-100 text-gray-400'
+                    }">
+                        ${step.completed ? '✓' : (index + 1)}
+                    </div>
+                    ${index < steps.length - 1 ? `
+                        <div class="w-1 h-12 mt-2 ${step.completed ? 'bg-green-100' : 'bg-gray-100'}"></div>
+                    ` : ''}
+                </div>
+                <div class="py-2">
+                    <p class="font-semibold text-gray-800">${step.label}</p>
+                    <p class="text-sm text-gray-600">${step.date}</p>
+                </div>
+            </div>
+        `).join('');
+
+        // Order Items
+        const itemsContainer = document.getElementById('orderItems');
+        itemsContainer.innerHTML = order.items.map((item, index) => `
+            <div class="flex items-center justify-between py-3 border-b border-gray-100 ${index === order.items.length - 1 ? 'last:border-0' : ''}">
+                <div class="flex-1">
+                    <p class="font-semibold text-gray-800">${item.name}</p>
+                    <p class="text-sm text-gray-600">Quantité: ${item.quantity}</p>
+                </div>
+                <p class="font-bold text-orange-600">${formatCurrency(item.price * item.quantity)}</p>
+            </div>
+        `).join('');
+    }
+
+    function getOrderSteps(status, createdAt, updatedAt) {
+        const statusMap = {
+            0: 'pending',      // Status::ORDER_PENDING
+            1: 'processing',   // Status::ORDER_PROCESSING
+            2: 'dispatched',   // Status::ORDER_DISPATCHED
+            3: 'delivered'     // Status::ORDER_DELIVERED
+        };
+
+        const currentStatus = statusMap[status] || 'pending';
+        const createdDate = formatDateTime(createdAt);
+        const updatedDate = formatDateTime(updatedAt);
+
+        const steps = [
+            {
+                label: 'Commande confirmée',
+                completed: ['pending', 'processing', 'dispatched', 'delivered'].includes(currentStatus),
+                date: createdDate
+            },
+            {
+                label: 'En préparation',
+                completed: ['processing', 'dispatched', 'delivered'].includes(currentStatus),
+                date: ['processing', 'dispatched', 'delivered'].includes(currentStatus) ? updatedDate : 'En attente'
+            },
+            {
+                label: 'En livraison',
+                completed: ['dispatched', 'delivered'].includes(currentStatus),
+                date: ['dispatched', 'delivered'].includes(currentStatus) ? updatedDate : 'En attente'
+            },
+            {
+                label: 'Livrée',
+                completed: currentStatus === 'delivered',
+                date: currentStatus === 'delivered' ? updatedDate : "Aujourd'hui avant 22h"
+            }
+        ];
+
+        return steps;
+    }
+
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('fr-FR', {
+            style: 'decimal',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(amount) + ' FCFA';
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('fr-FR', options);
+    }
+
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+        const dateOptions = { day: 'numeric', month: 'long' };
+        const timeOptions = { hour: '2-digit', minute: '2-digit' };
+        return date.toLocaleDateString('fr-FR', dateOptions) + ' ' +
+               date.toLocaleTimeString('fr-FR', timeOptions);
+    }
+});
+</script>
 @endpush
