@@ -2,23 +2,23 @@
 @section('panel')
     <div class="row">
         <div class="col-lg-12">
-            <div class="card b-radius--10">
+            <div class="card b-radius--10 tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body p-0">
                     <div class="table-responsive--md table-responsive">
                         <table class="table--light style--two table">
-                            <thead>
+                            <thead class="tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50">
                                 <tr>
-                                    <th>@lang('Product')</th>
-                                    <th>@lang('Price')</th>
-                                    <th>@lang('Downloadable')</th>
-                                    <th>@lang('Is Published')</th>
-                                    <th>@lang('In Stock')</th>
-                                    <th>@lang('Action')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Product')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Price')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Downloadable')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Is Published')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('In Stock')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Action')</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($products as $product)
-                                    <tr>
+                                    <tr class="tw-border-b tw-border-gray-100">
                                         <td>
                                             <!-- Product Card -->
                                             <div class="d-flex flex-wrap flex-md-nowrap gap-2 justify-content-lg-start justify-content-end">
@@ -32,10 +32,10 @@
                                                 <!-- Product Info -->
                                                 <div>
                                                     <!-- Product Name -->
-                                                    <span class="d-block"> {{ strLimit($product->name, 40) }}</span>
+                                                    <span class="d-block tw-font-semibold tw-text-gray-800"> {{ strLimit($product->name, 40) }}</span>
 
                                                     <!-- Product Brand -->
-                                                    <small class="text-muted d-block">
+                                                    <small class="text-muted d-block tw-text-gray-600">
                                                         @lang('Brand'): @if ($product->brand)
                                                             {{ __($product->brand->name) }}
                                                         @else
@@ -44,12 +44,12 @@
                                                     </small>
 
                                                     <!-- Product Categories -->
-                                                    <small class="text-muted d-block category-wrapper">
+                                                    <small class="text-muted d-block category-wrapper tw-text-gray-600">
                                                         @lang('Categories'): {{ $product->showCategories(3) }}
                                                     </small>
 
                                                     @if ($product->deleted_at == null)
-                                                        <a href="{{ $product->link() }}" target="_blank" class="text-muted small color--small text-decoration-underline">@lang('View in shop')</a>
+                                                        <a href="{{ $product->link() }}" target="_blank" class="text-muted small color--small text-decoration-underline tw-text-orange-500 hover:tw-text-orange-600">@lang('View in shop')</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 @if ($products->hasPages())
-                    <div class="card-footer py-4">
+                    <div class="card-footer py-4 tw-bg-gray-50 tw-border-t tw-border-gray-100">
                         {{ paginateLinks($products) }}
                     </div>
                 @endif
@@ -115,11 +115,11 @@
 
     @if (Route::is('admin.products.all'))
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-            <div class="offcanvas-header">
-                <h5 id="offcanvasRightLabel">@lang('Filter Products')</h5>
+            <div class="offcanvas-header tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50 tw-border-b tw-border-gray-200">
+                <h5 id="offcanvasRightLabel" class="tw-font-bold tw-text-gray-800">@lang('Filter Products')</h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
+            <div class="offcanvas-body tw-bg-gray-50">
                 <form action="" method="GET" id="filterForm">
                     <div class="form-group">
                         <label>@lang('Product Specification')</label>
@@ -202,8 +202,8 @@
                 </form>
             </div>
 
-            <div class="position-sticky p-3">
-                <button type="submit" class="btn btn--primary w-100 h-45" form="filterForm">@lang('Apply Filter')</button>
+            <div class="position-sticky p-3 tw-bg-white tw-border-t tw-border-gray-200">
+                <button type="submit" class="btn btn--primary w-100 h-45 tw-bg-gradient-to-r tw-from-orange-500 tw-to-green-600 hover:tw-shadow-lg tw-transition-shadow" form="filterForm">@lang('Apply Filter')</button>
             </div>
         </div>
     @endif

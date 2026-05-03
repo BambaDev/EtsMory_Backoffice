@@ -2,35 +2,35 @@
 @section('panel')
     <div class="row gy-4">
         <div class="col-12">
-            <div class="card summary-card">
+            <div class="card summary-card tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body">
-                    <h5 class="card-title">@lang('Summary')</h5>
+                    <h5 class="card-title tw-text-xl tw-font-bold tw-text-gray-800 tw-mb-4">@lang('Summary')</h5>
                     <div class="row g-0">
                         <div class="col-xl-3 col-sm-6">
-                            <div class="p-3 border-card h-100">
-                                <small class="text-muted">@lang('Total Sales')</small>
-                                <h6>{{ showAmount($deposit['total_deposit_amount']) }}</h6>
+                            <div class="p-3 border-card h-100 tw-bg-gradient-to-br tw-from-orange-50 tw-to-orange-100">
+                                <small class="text-muted tw-text-gray-600">@lang('Total Sales')</small>
+                                <h6 class="tw-font-bold tw-text-gray-800 tw-mt-2">{{ showAmount($deposit['total_deposit_amount']) }}</h6>
                             </div>
                         </div>
 
                         <div class="col-xl-3 col-sm-6">
-                            <div class="p-3 border-card h-100">
-                                <small class="text-muted">@lang('Payment Pending')</small>
-                                <h6>{{ showAmount($deposit['total_deposit_pending']) }}</h6>
+                            <div class="p-3 border-card h-100 tw-bg-gradient-to-br tw-from-blue-50 tw-to-blue-100">
+                                <small class="text-muted tw-text-gray-600">@lang('Payment Pending')</small>
+                                <h6 class="tw-font-bold tw-text-gray-800 tw-mt-2">{{ showAmount($deposit['total_deposit_pending']) }}</h6>
                             </div>
                         </div>
 
                         <div class="col-xl-3 col-sm-6">
-                            <div class="p-3 border-card h-100">
-                                <small class="text-muted">@lang('Rejected Payment')</small>
-                                <h6>{{ $deposit['total_deposit_rejected'] }}</h6>
+                            <div class="p-3 border-card h-100 tw-bg-gradient-to-br tw-from-red-50 tw-to-red-100">
+                                <small class="text-muted tw-text-gray-600">@lang('Rejected Payment')</small>
+                                <h6 class="tw-font-bold tw-text-gray-800 tw-mt-2">{{ $deposit['total_deposit_rejected'] }}</h6>
                             </div>
                         </div>
 
                         <div class="col-xl-3 col-sm-6">
-                            <div class="p-3 border-card h-100">
-                                <small class="text-muted">@lang('Payment Charge')</small>
-                                <h5>{{ showAmount($deposit['total_deposit_charge']) }}</h5>
+                            <div class="p-3 border-card h-100 tw-bg-gradient-to-br tw-from-green-50 tw-to-green-100">
+                                <small class="text-muted tw-text-gray-600">@lang('Payment Charge')</small>
+                                <h5 class="tw-font-bold tw-text-gray-800 tw-mt-2">{{ showAmount($deposit['total_deposit_charge']) }}</h5>
                             </div>
                         </div>
                     </div>
@@ -39,13 +39,13 @@
         </div>
 
         <div class="col-xxl-3 col-sm-6">
-            <div class="card h-100">
+            <div class="card h-100 tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body p-0">
-                    <h5 class="card-title pt-3 ps-3">@lang('Orders')</h5>
+                    <h5 class="card-title pt-3 ps-3 tw-text-lg tw-font-bold tw-text-gray-800">@lang('Orders')</h5>
                     <ul class="list-group list-group-flush custom-list-group">
                         @foreach ($widget['orders'] as $key => $order)
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-3">
-                                <span>{{ __(keyToTitle($key)) }}</span>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-3 tw-border-gray-100">
+                                <span class="tw-text-gray-700">{{ __(keyToTitle($key)) }}</span>
                                 <a href="{{ route($order['route']) }}">
                                     <span class="fw-bold badge {{ $order['color'] }} text-white">
                                         {{ $order['count'] }}
@@ -59,9 +59,9 @@
         </div>
 
         <div class="col-xxl-3 col-sm-6">
-            <div class="card h-100">
+            <div class="card h-100 tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">@lang('Attention Required')</h5>
+                    <h5 class="card-title mb-3 tw-text-lg tw-font-bold tw-text-gray-800">@lang('Attention Required')</h5>
                     <div class="row gy-3 counting-widget">
                         <div class="col-12">
                             <x-widget value="{{ $deposit['total_deposit_pending'] }}" title="Pending Payment" style="2" bg="white" color="danger" icon="las la-money-bill-wave" link="{{ route('admin.deposit.pending') }}" icon_style="solid" overlay_icon=0 />
@@ -81,9 +81,9 @@
         </div>
 
         <div class="col-xxl-6 col-xl-12">
-            <div class="card">
+            <div class="card tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">@lang('Customers')</h5>
+                    <h5 class="card-title mb-3 tw-text-lg tw-font-bold tw-text-gray-800">@lang('Customers')</h5>
 
                     <div class="row g-3 account-widget">
 
@@ -118,11 +118,11 @@
 
     <div class="row mt-1 gy-4">
         <div class="col-lg-6">
-            <div class="card h-100">
+            <div class="card h-100 tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-title">@lang('Sales Report')</h5>
-                        <div id="salesDatePicker" class="border p-1 cursor-pointer rounded">
+                    <div class="d-flex justify-content-between align-items-center tw-mb-4">
+                        <h5 class="card-title tw-text-lg tw-font-bold tw-text-gray-800 tw-mb-0">@lang('Sales Report')</h5>
+                        <div id="salesDatePicker" class="border p-1 cursor-pointer rounded tw-bg-gray-50 tw-border-gray-300 hover:tw-bg-gray-100 tw-transition-colors">
                             <i class="la la-calendar"></i>&nbsp;
                             <span></span> <i class="la la-caret-down"></i>
                         </div>
@@ -133,11 +133,11 @@
         </div>
 
         <div class="col-lg-6">
-            <div class="card h-100">
+            <div class="card h-100 tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body">
-                    <div class="d-flex flex-wrap gap-1 justify-content-between align-items-center">
-                        <h5 class="card-title">@lang('Top Selling Products')</h5>
-                        <a href="{{ route('admin.products.top.selling') }}" class="t-link">@lang('View All')</a>
+                    <div class="d-flex flex-wrap gap-1 justify-content-between align-items-center tw-mb-4">
+                        <h5 class="card-title tw-text-lg tw-font-bold tw-text-gray-800 tw-mb-0">@lang('Top Selling Products')</h5>
+                        <a href="{{ route('admin.products.top.selling') }}" class="t-link tw-text-orange-500 hover:tw-text-orange-600 tw-font-medium tw-no-underline">@lang('View All')</a>
                     </div>
 
                     @foreach ($topSellingProducts as $product)
@@ -146,23 +146,23 @@
                             $price = $product->regular_price;
                         @endphp
 
-                        <div class="mt-3 top-selling-product">
+                        <div class="mt-3 top-selling-product tw-border-b tw-border-gray-100 tw-pb-3 last:tw-border-b-0">
                             <a href="{{ $product->link() }}" target="_blank" data-bs-placement="bottom" title="@lang('View As Customer')" class="text-center top-selling-link">
-                                <img src="{{ $product->mainImage() }}" alt="image" class="top-selling-img">
+                                <img src="{{ $product->mainImage() }}" alt="image" class="top-selling-img tw-rounded-lg">
                             </a>
                             <div class="description">
                                 <div class="d-flex justify-content-between flex-wap gap-1">
-                                    <a href="{{ route('admin.products.edit', $product->id) }}" title="@lang('Edit')" class="color--blue d-inline-block mb-2">{{ __($product->name) }}</a>
+                                    <a href="{{ route('admin.products.edit', $product->id) }}" title="@lang('Edit')" class="color--blue d-inline-block mb-2 tw-font-semibold tw-text-gray-800 hover:tw-text-orange-500">{{ __($product->name) }}</a>
                                 </div>
-                                <p>{{ $product->total . ' ' . Str::plural('sale', $product->total) }}</p>
-                                <p>{{ strLimit(__($product->summary), 120) }}</p>
-                                <p class="mt-1">
-                                    <span>@lang('Price'):</span>
+                                <p class="tw-text-sm tw-text-gray-600">{{ $product->total . ' ' . Str::plural('sale', $product->total) }}</p>
+                                <p class="tw-text-sm tw-text-gray-500">{{ strLimit(__($product->summary), 120) }}</p>
+                                <p class="mt-1 tw-text-sm">
+                                    <span class="tw-text-gray-600">@lang('Price'):</span>
                                     @if ($price != $salePrice)
-                                        <span class="ms-1">{{ showAmount($salePrice) }}</span>
-                                        <del class="ms-2 text--danger">{{ showAmount($price) }}</del>
+                                        <span class="ms-1 tw-font-semibold tw-text-green-600">{{ showAmount($salePrice) }}</span>
+                                        <del class="ms-2 text--danger tw-text-gray-400">{{ showAmount($price) }}</del>
                                     @else
-                                        <span class="ms-1">{{ showAmount($price) }}</span>
+                                        <span class="ms-1 tw-font-semibold tw-text-gray-800">{{ showAmount($price) }}</span>
                                     @endif
                                 </p>
                             </div>
@@ -177,27 +177,27 @@
         <div class="col-12">
             <div class="row gy-4">
                 <div class="col-xxl-6">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <h6 class="card-title">@lang('Latest Customer')</h6>
+                    <div class="card h-100 tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
+                        <div class="card-header tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50 tw-border-gray-100">
+                            <h6 class="card-title tw-font-bold tw-text-gray-800 tw-mb-0">@lang('Latest Customer')</h6>
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive--md table-responsive">
                                 <table class="table--light style--two table">
                                     <thead>
                                         <tr>
-                                            <th>@lang('Username')</th>
-                                            <th>@lang('Name')</th>
-                                            <th>@lang('Order')</th>
-                                            <th>@lang('Action')</th>
+                                            <th class="tw-text-gray-700 tw-font-semibold">@lang('Username')</th>
+                                            <th class="tw-text-gray-700 tw-font-semibold">@lang('Name')</th>
+                                            <th class="tw-text-gray-700 tw-font-semibold">@lang('Order')</th>
+                                            <th class="tw-text-gray-700 tw-font-semibold">@lang('Action')</th>
                                         </tr>
                                     </thead>
                                     <tbody class="list">
                                         @forelse($latestUser as $user)
-                                            <tr>
-                                                <td><a href="{{ route('admin.users.detail', $user->id) }}">{{ $user->username }}</a></td>
-                                                <td>{{ $user->fullname }}</td>
-                                                <td>{{ $user->orders->count() }}</td>
+                                            <tr class="tw-border-b tw-border-gray-100">
+                                                <td><a href="{{ route('admin.users.detail', $user->id) }}" class="tw-text-orange-500 hover:tw-text-orange-600 tw-font-medium">{{ $user->username }}</a></td>
+                                                <td class="tw-text-gray-700">{{ $user->fullname }}</td>
+                                                <td class="tw-text-gray-700">{{ $user->orders->count() }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.users.detail', $user->id) }}" class="btn btn-outline--primary btn-sm">
                                                         <i class="las la-desktop"></i> @lang('Details')
@@ -217,33 +217,33 @@
                     </div>
                 </div>
                 <div class="col-xxl-6">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <h6 class="card-title">@lang('Latest Order')</h6>
+                    <div class="card h-100 tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
+                        <div class="card-header tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50 tw-border-gray-100">
+                            <h6 class="card-title tw-font-bold tw-text-gray-800 tw-mb-0">@lang('Latest Order')</h6>
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive--md table-responsive">
                                 <table class="table table--light style--two table">
                                     <thead>
                                         <tr>
-                                            <th>@lang('Customer')</th>
-                                            <th>@lang('Order Id')</th>
-                                            <th>@lang('Amount')</th>
-                                            <th>@lang('Action')</th>
+                                            <th class="tw-text-gray-700 tw-font-semibold">@lang('Customer')</th>
+                                            <th class="tw-text-gray-700 tw-font-semibold">@lang('Order Id')</th>
+                                            <th class="tw-text-gray-700 tw-font-semibold">@lang('Amount')</th>
+                                            <th class="tw-text-gray-700 tw-font-semibold">@lang('Action')</th>
                                         </tr>
                                     </thead>
                                     <tbody class="list">
                                         @forelse($recentOrders as $order)
-                                            <tr>
+                                            <tr class="tw-border-b tw-border-gray-100">
                                                 <td>
                                                     @if ($order->user_id)
-                                                        <a href="{{ route('admin.users.detail', @$order->user->id) }}">{{ $order->user->fullname }}</a>
+                                                        <a href="{{ route('admin.users.detail', @$order->user->id) }}" class="tw-text-orange-500 hover:tw-text-orange-600 tw-font-medium">{{ $order->user->fullname }}</a>
                                                     @else
-                                                        {{ strLimit($order->guest?->email, 15) }}
+                                                        <span class="tw-text-gray-600">{{ strLimit($order->guest?->email, 15) }}</span>
                                                     @endif
                                                 </td>
-                                                <td>{{ $order->order_number }}</td>
-                                                <td>{{ showAmount($order->amount) }}</td>
+                                                <td class="tw-text-gray-700 tw-font-mono">{{ $order->order_number }}</td>
+                                                <td class="tw-text-gray-700 tw-font-semibold">{{ showAmount($order->amount) }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.order.details', $order->id) }}" class="btn btn-outline--primary btn-sm">
                                                         <i class="las la-desktop"></i> @lang('Details')
@@ -268,25 +268,25 @@
 
     <div class="row gy-4 mt-1">
         <div class="col-xl-4 col-lg-6 mb-30">
-            <div class="card">
+            <div class="card tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body">
-                    <h5 class="card-title">@lang('Login By Browser') (@lang('Last 30 days'))</h5>
+                    <h5 class="card-title tw-text-lg tw-font-bold tw-text-gray-800 tw-mb-4">@lang('Login By Browser') (@lang('Last 30 days'))</h5>
                     <canvas id="userBrowserChart"></canvas>
                 </div>
             </div>
         </div>
         <div class="col-xl-4 col-lg-6 mb-30">
-            <div class="card">
+            <div class="card tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body">
-                    <h5 class="card-title">@lang('Login By OS') (@lang('Last 30 days'))</h5>
+                    <h5 class="card-title tw-text-lg tw-font-bold tw-text-gray-800 tw-mb-4">@lang('Login By OS') (@lang('Last 30 days'))</h5>
                     <canvas id="userOsChart"></canvas>
                 </div>
             </div>
         </div>
         <div class="col-xl-4 col-lg-6 mb-30">
-            <div class="card">
+            <div class="card tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body">
-                    <h5 class="card-title">@lang('Login By Country') (@lang('Last 30 days'))</h5>
+                    <h5 class="card-title tw-text-lg tw-font-bold tw-text-gray-800 tw-mb-4">@lang('Login By Country') (@lang('Last 30 days'))</h5>
                     <canvas id="userCountryChart"></canvas>
                 </div>
             </div>

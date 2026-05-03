@@ -3,48 +3,48 @@
 @section('panel')
     <div class="row">
         <div class="col-lg-12">
-            <div class="card b-radius--10">
+            <div class="card b-radius--10 tw-rounded-2xl tw-shadow-sm tw-border-gray-100">
                 <div class="card-body p-0">
                     <div class="table-responsive--md table-responsive">
                         <table class="table table--light style--two">
-                            <thead>
+                            <thead class="tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50">
                                 <tr>
-                                    <th>@lang('Order Date')</th>
-                                    <th>@lang('Customer')</th>
-                                    <th>@lang('Order ID')</th>
-                                    <th>@lang('Payment Via')</th>
-                                    <th>@lang('Amount')</th>
-                                    <th>@lang('Payment Status')</th>
-                                    <th>@lang('Status')</th>
-                                    <th>@lang('Action')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Order Date')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Customer')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Order ID')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Payment Via')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Amount')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Payment Status')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Status')</th>
+                                    <th class="tw-text-gray-700 tw-font-semibold">@lang('Action')</th>
                                 </tr>
                             </thead>
                             <tbody class="list">
                                 @forelse($orders as $order)
-                                    <tr>
-                                        <td>{{ showDateTime($order->created_at, 'd M, Y') }}</td>
+                                    <tr class="tw-border-b tw-border-gray-100">
+                                        <td class="tw-text-gray-700">{{ showDateTime($order->created_at, 'd M, Y') }}</td>
 
                                         <td>
                                             @if ($order->user_id)
-                                                <a href="{{ route('admin.users.detail', $order->user->id) }}">{{ $order->user->username }}</a>
+                                                <a href="{{ route('admin.users.detail', $order->user->id) }}" class="tw-text-orange-500 hover:tw-text-orange-600 tw-font-medium">{{ $order->user->username }}</a>
                                             @else
-                                                {{ strLimit($order->guest->email, 15) }}
+                                                <span class="tw-text-gray-600">{{ strLimit($order->guest->email, 15) }}</span>
                                             @endif
                                         </td>
 
-                                        <td>{{ $order->order_number }}</td>
+                                        <td class="tw-font-mono tw-text-gray-800 tw-font-semibold">{{ $order->order_number }}</td>
 
                                         <td>
                                             @if ($order->is_cod)
-                                                <span class="color--warning"
+                                                <span class="color--warning tw-text-orange-600"
                                                     title="@lang('Cash On Delivery')">{{ @$deposit->gateway->name ?? trans('COD') }}</span>
                                             @elseif($order->deposit)
-                                                <strong class="text-primary">{{ @$order->deposit->gateway->name }}</strong>
+                                                <strong class="text-primary tw-text-blue-600">{{ @$order->deposit->gateway->name }}</strong>
                                             @endif
                                         </td>
 
                                         <td>
-                                            <b>{{ showAmount($order->total_amount) }}</b>
+                                            <b class="tw-text-gray-800 tw-font-bold">{{ showAmount($order->total_amount) }}</b>
                                         </td>
 
                                         <td>@php echo $order->paymentBadge() @endphp</td>
@@ -132,7 +132,7 @@
                 </div>
 
                 @if ($orders->hasPages())
-                    <div class="card-footer py-4">
+                    <div class="card-footer py-4 tw-bg-gray-50 tw-border-t tw-border-gray-100">
                         {{ paginateLinks($orders) }}
                     </div>
                 @endif
@@ -142,9 +142,9 @@
 
     <div id="deliverModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">@lang('Deliver Product')</h5>
+            <div class="modal-content tw-rounded-2xl">
+                <div class="modal-header tw-bg-gradient-to-r tw-from-orange-50 tw-to-green-50 tw-border-b tw-border-gray-200">
+                    <h5 class="modal-title tw-font-bold tw-text-gray-800">@lang('Deliver Product')</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <i class="las la-times"></i>
                     </button>
@@ -152,8 +152,8 @@
                 <form method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body"></div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn--primary w-100 h-45">@lang('Submit')</button>
+                    <div class="modal-footer tw-bg-gray-50 tw-border-t tw-border-gray-100">
+                        <button type="submit" class="btn btn--primary w-100 h-45 tw-bg-gradient-to-r tw-from-orange-500 tw-to-green-600 hover:tw-shadow-lg tw-transition-shadow">@lang('Submit')</button>
                     </div>
                 </form>
             </div>
