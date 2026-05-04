@@ -10,7 +10,7 @@
     </div>
 
     <div class="tw-p-6">
-        <div class="address-wrapper">
+        <div class="tw-space-y-4">
             @foreach ($shippingAddresses as $item)
                 @php
                     $checkoutData = session('shipping_info');
@@ -24,54 +24,63 @@
                     }
                 @endphp
 
-                <label class="address-single" for="address-{{ $item->id }}">
-                    <div class="flex-fill">
-                        <div class="address-item-left">
-                            <div class="form--check d-inline-block">
-                                <input class="form-check-input mt-0" type="radio" name="shipping_address_id" value="{{ $item->id }}" form="shipping-form" id="address-{{ $item->id }}" @checked($isChecked)>
+                <label for="address-{{ $item->id }}"
+                    class="tw-flex tw-items-start tw-gap-4 tw-p-4 tw-border tw-border-gray-200 tw-rounded-xl hover:tw-border-orange-300 tw-cursor-pointer tw-transition-colors {{ $isChecked ? 'tw-border-orange-500 tw-bg-orange-50' : 'tw-bg-white' }}">
+                    <div class="tw-flex-shrink-0 tw-pt-1">
+                        <input type="radio"
+                            name="shipping_address_id"
+                            value="{{ $item->id }}"
+                            form="shipping-form"
+                            id="address-{{ $item->id }}"
+                            @checked($isChecked)
+                            class="tw-w-5 tw-h-5 tw-text-orange-500 tw-border-gray-300 focus:tw-ring-orange-500">
+                    </div>
+
+                    <div class="tw-flex-1 tw-min-w-0">
+                        <h6 class="tw-font-semibold tw-text-gray-800 tw-mb-3">{{ $item->label }}</h6>
+                        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 tw-gap-x-4 tw-gap-y-2 tw-text-sm">
+                            <div class="tw-flex tw-gap-2">
+                                <span class="tw-text-gray-500 tw-min-w-[80px]">@lang('Address'):</span>
+                                <span class="tw-text-gray-700 tw-font-medium">{{ $item->address }}</span>
                             </div>
-                            <h6>{{ $item->label }}</h6>
-                        </div>
-                        <div class="address-item-right">
-                            <div class="address-item-inner">
-                                <span class="address-item-label">@lang('Address')</span>
-                                <span class="address-item-value"> <span class="item-devide">:</span> {{ $item->address }}</span>
+                            <div class="tw-flex tw-gap-2">
+                                <span class="tw-text-gray-500 tw-min-w-[80px]">@lang('Zip Code'):</span>
+                                <span class="tw-text-gray-700 tw-font-medium">{{ $item->zip }}</span>
                             </div>
-                            <div class="address-item-inner">
-                                <span class="address-item-label">@lang('Zip Code')</span>
-                                <span class="address-item-value"> <span class="item-devide">:</span> {{ $item->zip }}</span>
+                            <div class="tw-flex tw-gap-2">
+                                <span class="tw-text-gray-500 tw-min-w-[80px]">@lang('City'):</span>
+                                <span class="tw-text-gray-700 tw-font-medium">{{ $item->city }}</span>
                             </div>
-                            <div class="address-item-inner">
-                                <span class="address-item-label">@lang('City')</span>
-                                <span class="address-item-value"> <span class="item-devide">:</span> {{ $item->city }}</span>
+                            <div class="tw-flex tw-gap-2">
+                                <span class="tw-text-gray-500 tw-min-w-[80px]">@lang('State'):</span>
+                                <span class="tw-text-gray-700 tw-font-medium">{{ $item->state }}</span>
                             </div>
-                            <div class="address-item-inner">
-                                <span class="address-item-label">@lang('State')</span>
-                                <span class="address-item-value"> <span class="item-devide">:</span> {{ $item->state }}</span>
+                            <div class="tw-flex tw-gap-2">
+                                <span class="tw-text-gray-500 tw-min-w-[80px]">@lang('Country'):</span>
+                                <span class="tw-text-gray-700 tw-font-medium">{{ $item->country }}</span>
                             </div>
-                            <div class="address-item-inner">
-                                <span class="address-item-label">@lang('Country')</span>
-                                <span class="address-item-value"> <span class="item-devide">:</span> {{ $item->country }}</span>
-                            </div>
-                            <div class="address-item-inner">
-                                <span class="address-item-label">@lang('Phone')</span>
-                                <span class="address-item-value"> <span class="item-devide">:</span> {{ $item->mobile }}</span>
+                            <div class="tw-flex tw-gap-2">
+                                <span class="tw-text-gray-500 tw-min-w-[80px]">@lang('Phone'):</span>
+                                <span class="tw-text-gray-700 tw-font-medium">{{ $item->mobile }}</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="position-relative text-end">
-                        <button type="button" data-resource="{{ $item }}" class="btn btn-outline--light editAddress">
+                    <div class="tw-flex-shrink-0">
+                        <button type="button"
+                            data-resource="{{ $item }}"
+                            class="editAddress tw-px-3 tw-py-2 tw-rounded-lg tw-border tw-border-blue-300 tw-text-blue-600 hover:tw-bg-blue-50 tw-transition-colors tw-text-sm tw-font-medium tw-flex tw-items-center tw-gap-1">
                             <i class="la la-pencil"></i>
-                            <span class="d-none d-sm-inline">@lang('Change')</span>
+                            <span class="tw-hidden sm:tw-inline">@lang('Change')</span>
                         </button>
                     </div>
                 </label>
             @endforeach
 
-            <button class="newAddress w-100 address-single-add-new">
-                <i class="las la-plus-circle"></i>
-                <span class="add-new-title d-block">@lang('Add New Address')</span>
+            <button type="button"
+                class="newAddress tw-w-full tw-p-4 tw-border-2 tw-border-dashed tw-border-gray-300 tw-rounded-xl hover:tw-border-orange-400 hover:tw-bg-orange-50 tw-transition-colors tw-flex tw-flex-col tw-items-center tw-gap-2 tw-bg-white tw-cursor-pointer">
+                <i class="las la-plus-circle tw-text-3xl tw-text-orange-500"></i>
+                <span class="tw-text-base tw-font-medium tw-text-gray-700">@lang('Add New Address')</span>
             </button>
         </div>
 

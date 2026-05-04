@@ -14,50 +14,54 @@
             @endif
 
             <div class="@if ($loginContent->data_values->image) col-lg-6 col-xxl-5 @else col-xl-5 col-lg-7 col-md-9 @endif">
-                <div class="auth-form">
-                    <div class="auth-form__head text-center">
-                        <div class="logo">
-                            <a href="{{ route('home') }}"><img src="{{ siteLogo('dark') }}" alt="@lang('logo')"></a>
+                <div class="tw-w-full tw-max-w-md tw-px-4 mx-auto">
+                    {{-- Login Card --}}
+                    <div class="tw-bg-white tw-rounded-2xl tw-shadow-sm tw-border tw-border-gray-100 tw-overflow-hidden tw-p-6">
+                        {{-- Header --}}
+                        <div class="tw-text-center tw-mb-5">
+                            <div class="logo tw-mb-3">
+                                <a href="{{ route('home') }}"><img src="{{ siteLogo('dark') }}" alt="@lang('logo')"></a>
+                            </div>
                         </div>
 
-                    </div>
-                    <div class="auth-form__body">
-                        <form method="POST" action="{{ route('user.login') }}">
-                            @csrf
-                            <div class="form-group">
-                                <label class="form--label">@lang('Username')</label>
-                                <input class="form--control" type="text" name="username" value="{{ old('username') }}" placeholder="@lang('Username')" required autofocus>
-                            </div>
-                            <div class="form-group">
-                                <label class="form--label" for="password">@lang('Password')</label>
-                                <input id="password" type="password" name="password" class="form--control" placeholder="@lang('Enter Your Password')" required autocomplete="current-password">
-                            </div>
+                        <div class="tw-mb-5">
+                            <form method="POST" action="{{ route('user.login') }}">
+                                @csrf
+                                <div class="tw-mb-4">
+                                    <label class="form--label tw-text-sm tw-font-medium tw-text-gray-700">@lang('Username')</label>
+                                    <input class="form--control tw-w-full tw-px-3 tw-py-2 tw-rounded-lg tw-border tw-border-gray-300 focus:tw-border-orange-500 focus:tw-ring-1 focus:tw-ring-orange-500 focus:tw-outline-none tw-transition-colors" type="text" name="username" value="{{ old('username') }}" placeholder="@lang('Username')" required autofocus>
+                                </div>
 
-                            <div class="form-group">
-                                <div class="d-flex gap-1 flex-wrap justify-content-between">
+                                <div class="tw-mb-4">
+                                    <label class="form--label tw-text-sm tw-font-medium tw-text-gray-700" for="password">@lang('Password')</label>
+                                    <input id="password" type="password" name="password" class="form--control tw-w-full tw-px-3 tw-py-2 tw-rounded-lg tw-border tw-border-gray-300 focus:tw-border-orange-500 focus:tw-ring-1 focus:tw-ring-orange-500 focus:tw-outline-none tw-transition-colors" placeholder="@lang('Enter Your Password')" required autocomplete="current-password">
+                                </div>
+
+                                <div class="tw-flex tw-items-center tw-justify-content-between tw-mb-4">
                                     <div class="form-check form--check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                                        <label class="form-check-label" for="remember">
+                                        <label class="form-check-label tw-text-sm tw-text-gray-600" for="remember">
                                             @lang('Remember Me')
                                         </label>
                                     </div>
 
-                                    <a href="{{ route('user.password.request') }}" class="t-link d-block text-end text--base heading-clr sm-text fw-md">
+                                    <a href="{{ route('user.password.request') }}" class="t-link tw-text-sm tw-text-orange-500 hover:tw-text-orange-600 tw-font-medium tw-no-underline tw-transition-colors">
                                         @lang('Forgot Password?')
                                     </a>
                                 </div>
-                            </div>
 
-                            <x-captcha />
+                                <x-captcha />
 
-                            <button class="btn btn--md btn--base sm-text h-45 w-100" type="submit" id="recaptcha">@lang('Login Account')</button>
+                                <button class="btn btn--base tw-w-full tw-h-11 tw-rounded-lg tw-font-semibold tw-text-sm tw-transition-colors" type="submit" id="recaptcha">@lang('Login Account')</button>
 
-                            @if (Route::has('user.register'))
-                                <p class="mt-2 mb-0">
-                                    @lang('Don\'t have an account') ? <a href="{{ route('user.register') }}" class="t-link t-link--base text--base">@lang('Create An Account')</a>
-                                </p>
-                            @endif
-                        </form>
+                                @if (Route::has('user.register'))
+                                    <p class="tw-mt-3 tw-mb-0 tw-text-sm tw-text-gray-600">
+                                        @lang('Don\'t have an account') ? <a href="{{ route('user.register') }}" class="t-link tw-text-orange-500 hover:tw-text-orange-600 tw-font-medium tw-no-underline tw-transition-colors">@lang('Create An Account')</a>
+                                    </p>
+                                @endif
+                            </form>
+                        </div>
+
                         @include('Template::partials.social_login')
                     </div>
                 </div>

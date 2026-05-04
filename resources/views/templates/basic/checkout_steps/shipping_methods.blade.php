@@ -10,50 +10,51 @@
     </div>
 
     <div class="tw-p-6">
-        <div class="address-wrapper">
-            <div class="address-type-content">
-                <h6 class="mb-3">@lang('Choose Delivery Type')</h6>
+        <h6 class="tw-font-semibold tw-text-gray-800 tw-mb-4">@lang('Choose Delivery Type')</h6>
 
-                <div class="delivery-type-wrapper">
-                    @foreach ($shippingMethods as $item)
-                        <label for="method-{{ $item->id }}" class="delivery-type">
-                            <span class="form--check d-flex">
-                                <input class="form-check-input mt-0" type="radio" name="shipping_method_id"
-                                    value="{{ $item->id }}" form="deliveryMethodForm" id="method-{{ $item->id }}"
-                                    data-resource="{{ $item }}" @checked($loop->first) required>
-                            </span>
+        <div class="delivery-type-wrapper tw-space-y-3">
+            @foreach ($shippingMethods as $item)
+                <label for="method-{{ $item->id }}"
+                    class="delivery-type tw-flex tw-items-start tw-gap-4 tw-p-4 tw-border tw-border-gray-200 tw-rounded-xl hover:tw-border-orange-300 tw-cursor-pointer tw-transition-colors {{ $loop->first ? 'tw-border-orange-500 tw-bg-orange-50' : 'tw-bg-white' }}">
+                    <div class="tw-flex-shrink-0 tw-pt-1">
+                        <input type="radio"
+                            name="shipping_method_id"
+                            value="{{ $item->id }}"
+                            form="deliveryMethodForm"
+                            id="method-{{ $item->id }}"
+                            data-resource="{{ $item }}"
+                            @checked($loop->first)
+                            required
+                            class="tw-w-5 tw-h-5 tw-text-orange-500 tw-border-gray-300 focus:tw-ring-orange-500">
+                    </div>
 
-                            <span class="delivery-type-name">
-                                {{ __($item->name) }}
-                            </span>
-                        </label>
+                    <div class="tw-flex-1">
+                        <h6 class="tw-font-semibold tw-text-gray-800 tw-mb-2">{{ __($item->name) }}</h6>
+                    </div>
+                </label>
 
-                        <div class="methodInfo mt-3 delivery-type-content">
-                            <div class="address-item-inner">
-                                <span class="address-item-label">@lang('Delivered In')</span>
-                                <span class="address-item-value"> <span class="item-devide">:</span> {{ $item->shipping_time }}
-                                    @lang('Days')</span>
-                            </div>
-
-                            <div class="address-item-inner">
-                                <span class="address-item-label">@lang('Delivery Charge')</span>
-                                <span class="address-item-value">
-                                    <span class="item-devide">:</span>
-                                    {{ showAmount($item->charge) }}
-                                </span>
-                            </div>
-
-                            @if (strip_tags($item->description))
-                                <div class="address-item-inner bg-light p-3 rounded-3">
-                                    <p>
-                                        @php echo $item->description @endphp
-                                    </p>
-                                </div>
-                            @endif
+                <div class="methodInfo delivery-type-content tw-ml-9 tw-mb-4 tw-p-4 tw-bg-gray-50 tw-rounded-xl tw-border tw-border-gray-200">
+                    <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 tw-gap-4 tw-mb-3">
+                        <div class="tw-flex tw-items-center tw-gap-2 tw-text-sm">
+                            <i class="las la-clock tw-text-orange-500 tw-text-xl"></i>
+                            <span class="tw-text-gray-600">@lang('Delivered In'):</span>
+                            <span class="tw-font-semibold tw-text-gray-800">{{ $item->shipping_time }} @lang('Days')</span>
                         </div>
-                    @endforeach
+
+                        <div class="tw-flex tw-items-center tw-gap-2 tw-text-sm">
+                            <i class="las la-tag tw-text-green-500 tw-text-xl"></i>
+                            <span class="tw-text-gray-600">@lang('Delivery Charge'):</span>
+                            <span class="tw-font-semibold tw-text-green-600">{{ showAmount($item->charge) }}</span>
+                        </div>
+                    </div>
+
+                    @if (strip_tags($item->description))
+                    <div class="tw-bg-white tw-p-3 tw-rounded-lg tw-text-sm tw-text-gray-600">
+                        @php echo $item->description @endphp
+                    </div>
+                    @endif
                 </div>
-            </div>
+            @endforeach
         </div>
 
         <div class="tw-flex tw-items-center tw-justify-between tw-flex-wrap tw-gap-3 tw-mt-6">
